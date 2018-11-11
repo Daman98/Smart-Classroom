@@ -19,11 +19,11 @@ void setup() {
 }
 
 void loop() {
-  uint8_t x = analogRead(xPin); //Reading Input from x-axis of accelerometer
-  uint8_t y = analogRead(yPin); //Reading Input from y-axis of accelerometer
-  uint8_t z = analogRead(zPin); //Reading Input from z-axis of accelerometer
-  uint8_t f1 = analogRead(flex1); //Reading Input from flex sensor on first finger
-  uint8_t f2 = analogRead(flex2); //Reading Input from flex sensor on middle finger
+  int32_t x = analogRead(xPin); //Reading Input from x-axis of accelerometer
+  int32_t y = analogRead(yPin); //Reading Input from y-axis of accelerometer
+  int32_t z = analogRead(zPin); //Reading Input from z-axis of accelerometer
+  int32_t f1 = analogRead(flex1); //Reading Input from flex sensor on first finger
+  int32_t f2 = analogRead(flex2); //Reading Input from flex sensor on middle finger
   
   if(y>370){
     Serial.println("L"); //Printing L to move mouse pointer to left
