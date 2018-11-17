@@ -73,7 +73,7 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="/"><i class="menu-icon fa fa-laptop"></i>Attendance Sheet </a>
+                        <a href="/attendance"><i class="menu-icon fa fa-laptop"></i>Attendance Sheet </a>
                     </li>
                     <li>
                         <a href="/"><i class="menu-icon fa fa-laptop"></i>Live Seat Map</a>
@@ -167,12 +167,16 @@
                     }
                 });
             },3000);
-            jQuery.get("/get_names",function(data){
-                    list_data = JSON.parse(data);                  
-                for(x in  list_data){
-                        jQuery("#"+(Number(x)+1).toString()+"b").html(list_data[x]);
-                    }
-            });
+
+            setInterval(function(){
+                jQuery.get("/get_names",function(data){
+                        list_data = JSON.parse(data);                  
+                    for(x in  list_data){
+                            jQuery("#"+(Number(x)+1).toString()+"b").html(list_data[x]);
+                        }
+                });
+            },5000);
+
             setInterval(function(){
                 jQuery.get("/get_seating",function(data){
                     list_data = JSON.parse(data);                  

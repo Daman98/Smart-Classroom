@@ -53,7 +53,7 @@ def get(request):
 	client.on_message = on_message
 
 	client.username_pw_set("username", "1234")
-	client.connect("10.42.0.1", 1883, 60)
+	client.connect("0.0.0.0", 1883, 60)
 
 	client.loop_start()		
 	return HttpResponse(h)
@@ -61,6 +61,43 @@ def get(request):
 def get_seating(request):
 	return HttpResponse('["' + '","'.join(a) + '"]')
 
+names = ["","","",""]
+
 def get_names(request):
-	names = ["a","b","c","d"]
+	global names
 	return HttpResponse('["'+'","'.join(names)+'"]')
+
+from django.views.decorators.csrf import csrf_exempt
+
+import re
+
+from .models import *
+
+@csrf_exempt 	
+def set_names(request):
+	if request.method=="POST":
+		global names
+		x = request.POST.get('file')
+		if len(re.split("\r\n|\n",x))==1:
+			return HttpResponse("Done")
+		model = Attendance()
+		for y in re.split("\r\n|\n",x):
+			if y!="":
+				z = y.split(" - ")
+				if len(z)>1:
+					names[int(z[0])-1] = z[1]
+					if z[1]=="Apurva":
+						model.apurva = 1
+					if z[1]=="Daman":
+						model.daman = 1
+					if z[1]=="Samyak":
+						model.samyak = 1
+					if z[1]=="Shreyanshi":
+						model.shreyanshi = 1
+			model.save()
+
+		return HttpResponse("Success")
+	return HttpResponse("Use Post")
+
+def index2(request):
+	return render(request, 'main/index2.html',{"att":Attendance.objects.all()})
