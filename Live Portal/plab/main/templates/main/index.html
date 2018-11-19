@@ -76,7 +76,7 @@
                         <a href="/attendance"><i class="menu-icon fa fa-laptop"></i>Attendance Sheet </a>
                     </li>
                     <li>
-                        <a href="/"><i class="menu-icon fa fa-laptop"></i>Live Seat Map</a>
+                        <a href="#"><i class="menu-icon fa fa-laptop"></i>Live Seat Map</a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -89,7 +89,7 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="{% static 'images/logo.png'%}" alt="Logo"></a>
+                    <a class="navbar-brand" href="./"><img  style="height:30px;" src="{% static 'images/logo.png'%}" alt="Logo"></a>
                     <a class="navbar-brand hidden" href="./"><img src="{% static 'images/logo2.png'%}" alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
@@ -166,7 +166,7 @@
                         jQuery("#1a").html("1");
                     }
                 });
-            },3000);
+            },500);
 
             setInterval(function(){
                 jQuery.get("/get_names",function(data){
@@ -175,7 +175,7 @@
                             jQuery("#"+(Number(x)+1).toString()+"b").html(list_data[x]);
                         }
                 });
-            },5000);
+            },500);
 
             setInterval(function(){
                 jQuery.get("/get_seating",function(data){
@@ -186,7 +186,7 @@
                         jQuery("#"+(Number(x)+1).toString()).addClass("card bg-"+list_data[x]+" text-center");
                     }
                 });
-            },1000);
+            },500);
         </script>
     </body>
     </html>

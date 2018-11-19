@@ -3,7 +3,8 @@ from django.http import HttpResponse
 import paho.mqtt.client as mqtt
 import time
 
-a = ["success","danger","danger","danger"]
+# a = ["success","danger","danger","danger"]
+a = ["danger","danger","danger","danger"]
 p = 1
 
 # Create your views here.
@@ -53,7 +54,7 @@ def get(request):
 	client.on_message = on_message
 
 	client.username_pw_set("username", "1234")
-	client.connect("0.0.0.0", 1883, 60)
+	client.connect("127.0.0.1", 1883, 60)
 
 	client.loop_start()		
 	return HttpResponse(h)
@@ -72,6 +73,9 @@ from django.views.decorators.csrf import csrf_exempt
 import re
 
 from .models import *
+import datetime
+import os
+import json 
 
 @csrf_exempt 	
 def set_names(request):
@@ -95,6 +99,17 @@ def set_names(request):
 					if z[1]=="Shreyanshi":
 						model.shreyanshi = 1
 			model.save()
+		present_students = []
+		if model.apurva:
+			present_students.append("Apurva")
+		if model.daman:
+			present_students.append("Daman")
+		if model.samyak:
+			present_students.append("Samyak")
+		if model.shreyanshi:
+			present_students.append("Shreyanshi")
+		data = json.dumps({"date":str(datetime.date.today().isoformat()),"students":present_students})
+		os.system("mosquitto_pub -u username -P 1234 -t dev/test -m '" +  data +"' -h 10.150.36.211 -r")
 
 		return HttpResponse("Success")
 	return HttpResponse("Use Post")
